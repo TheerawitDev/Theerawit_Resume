@@ -28,8 +28,8 @@ const DATA = {
       "Beginner software developer learning to build web applications, with a strong focus on Python and growing skills in full-stack development.",
     location: "Bangkok, Thailand",
     avatar: {
-      src: "/me.jpg", 
-      alt: "Portrait of Theerawit Waithayawan",
+      src: import.meta.env.BASE_URL + "me.jpg", 
+      alt: "Portrait of Theerawit <3",
     },
     contacts: [
       { type: "email", label: "pm.theerawit@gmail.com", href: "mailto:pm.theerawit@gmail.com", icon: Mail },
@@ -306,7 +306,6 @@ function Avatar({ src, alt }) {
 // 3) APP
 // -----------------------------------------------------
 export default function App() {
-  // React theme state synced with localStorage + <html>.dark
   const [dark, setDark] = useState(() => {
     if (typeof window === "undefined") return true;
     const ls = localStorage.getItem("theme");
@@ -316,7 +315,6 @@ export default function App() {
   const [query, setQuery] = useState("");
   const toggleDark = () => setDark((v) => !v);
 
-  // Apply/remove .dark on <html> and persist choice
   useEffect(() => {
     const root = document.documentElement;
     if (dark) root.classList.add("dark");
@@ -324,7 +322,6 @@ export default function App() {
     try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch {}
   }, [dark]);
 
-  // Follow OS theme ONLY if user hasn't picked a theme
   useEffect(() => {
     if (typeof window === "undefined") return;
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -333,7 +330,7 @@ export default function App() {
       if (!stored) setDark(e.matches);
     };
     mq.addEventListener?.("change", onChange);
-    mq.addListener?.(onChange); // Safari fallback
+    mq.addListener?.(onChange); 
     return () => {
       mq.removeEventListener?.("change", onChange);
       mq.removeListener?.(onChange);
